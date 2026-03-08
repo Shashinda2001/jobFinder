@@ -1,5 +1,16 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.highperformanceformat.com https://pl28872934.effectivegatecpm.com https://*.adsterra.com;"
+        }
+      ]
+    }
   ]
 }
