@@ -1,66 +1,65 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useParams, useNavigate } from 'react-router-dom';
 
+const API_URL = 'https://jobfinder-production-b62d.up.railway.app';
+
 // ── Reusable Ad Components ──────────────────────────────────────────
 
-// 728x90 Top Banner (highperformanceformat)
+// 728x90 Top Banner
 function TopBannerAd() {
   const ref = useRef(null);
   useEffect(() => {
     if (!ref.current || ref.current.dataset.loaded) return;
     ref.current.dataset.loaded = 'true';
-
     window.atOptions = {
-      key: '49b4426b69b01577d231bbd97ffb16f1',
+      key: '8000e87fbdc97fc345d0213ffbfe592f',
       format: 'iframe',
       height: 90,
       width: 728,
       params: {}
     };
     const s = document.createElement('script');
-    s.src = 'https://www.highperformanceformat.com/49b4426b69b01577d231bbd97ffb16f1/invoke.js';
+    s.src = 'https://www.highperformanceformat.com/8000e87fbdc97fc345d0213ffbfe592f/invoke.js';
     ref.current.appendChild(s);
   }, []);
   return <div ref={ref} style={{ textAlign: 'center', marginBottom: '25px', minHeight: '90px' }} />;
 }
 
-// Native Banner – In-Feed (effectivegatecpm)
+// Native Banner – In-Feed
 function NativeBannerAd() {
   const ref = useRef(null);
   useEffect(() => {
     if (!ref.current || ref.current.dataset.loaded) return;
     ref.current.dataset.loaded = 'true';
-
     const s = document.createElement('script');
     s.async = true;
     s.dataset.cfasync = 'false';
-    s.src = 'https://pl28872321.effectivegatecpm.com/ad02cab419f44130cd64390a2b82619a/invoke.js';
+    s.src = 'https://pl28872934.effectivegatecpm.com/e284ba0ec8bd6b0e7a9b4ddae8309f9b/invoke.js';
     ref.current.appendChild(s);
   }, []);
   return (
     <div style={{ margin: '10px 0' }}>
       <div ref={ref} />
-      <div id="container-ad02cab419f44130cd64390a2b82619a" />
+      <div id="container-e284ba0ec8bd6b0e7a9b4ddae8309f9b" />
     </div>
   );
 }
 
-// 300x250 Rectangle (highperformanceformat)
+// 300x250 Rectangle
 function RectangleAd() {
   const ref = useRef(null);
   useEffect(() => {
     if (!ref.current || ref.current.dataset.loaded) return;
     ref.current.dataset.loaded = 'true';
-
     window.atOptions = {
-      key: '3473b590641d534a20d9e039d7940b62',
+      key: '1c1bd31425eabb4929daa9bf7cc527bd',
       format: 'iframe',
       height: 250,
       width: 300,
       params: {}
     };
     const s = document.createElement('script');
-    s.src = 'https://www.highperformanceformat.com/3473b590641d534a20d9e039d7940b62/invoke.js';
+    s.src = 'https://www.highperformanceformat.com/1c1bd31425eabb4929daa9bf7cc527bd/invoke.js';
     ref.current.appendChild(s);
   }, []);
   return (
@@ -106,7 +105,7 @@ function JobList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://jobfinder-production-b62d.up.railway.app/api/jobs')
+    fetch(`${API_URL}/api/jobs`)
       .then(r => r.json())
       .then(data => { setJobs(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -117,7 +116,7 @@ function JobList() {
       <Navbar isAdmin={false} />
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '30px 20px' }}>
 
-        {/* TOP BANNER AD ✅ */}
+        {/* TOP BANNER AD */}
         <TopBannerAd />
 
         <h1 style={{ color: '#1a202c', marginBottom: '30px', fontSize: '28px', fontWeight: '800' }}>Featured Opportunities</h1>
@@ -144,7 +143,7 @@ function JobList() {
                   </Link>
                 </div>
 
-                {/* IN-FEED NATIVE AD ✅ — after every 2 jobs */}
+                {/* IN-FEED NATIVE AD — after every 2 jobs */}
                 {(index + 1) % 2 === 0 && index !== jobs.length - 1 && (
                   <NativeBannerAd />
                 )}
@@ -153,7 +152,7 @@ function JobList() {
           </div>
         )}
 
-        {/* BOTTOM NATIVE AD ✅ */}
+        {/* BOTTOM NATIVE AD */}
         <div style={{ marginTop: '40px', borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
           <NativeBannerAd />
         </div>
@@ -171,7 +170,7 @@ function JobDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://jobfinder-production-b62d.up.railway.app/api/jobs/${id}`)
+    fetch(`${API_URL}/api/jobs/${id}`)
       .then(r => r.json())
       .then(data => { setJob(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -185,7 +184,7 @@ function JobDetails() {
       <Navbar isAdmin={false} />
       <div style={{ maxWidth: '750px', margin: '0 auto', padding: '30px 20px' }}>
 
-        {/* TOP BANNER AD ✅ */}
+        {/* TOP BANNER AD */}
         <TopBannerAd />
 
         <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
@@ -196,7 +195,7 @@ function JobDetails() {
             <p style={{ fontSize: '22px', color: '#64748b', margin: 0, fontWeight: '500' }}>{job.company}</p>
           </div>
 
-          {/* 300x250 RECTANGLE AD ✅ */}
+          {/* 300x250 RECTANGLE AD */}
           <RectangleAd />
 
           <div style={{ margin: '40px 0', lineHeight: '1.8', color: '#334155', fontSize: '17px', whiteSpace: 'pre-wrap' }}>
@@ -204,7 +203,7 @@ function JobDetails() {
             {job.description}
           </div>
 
-          {/* PRE-APPLY NATIVE AD ✅ */}
+          {/* PRE-APPLY NATIVE AD */}
           <div style={{ margin: '40px 0', padding: '20px', border: '2px dashed #93c5fd', borderRadius: '12px', backgroundColor: '#eff6ff' }}>
             <p style={{ fontWeight: '800', marginBottom: '12px', color: '#1d4ed8', fontSize: '14px', textTransform: 'uppercase', textAlign: 'center' }}>Recommended Links:</p>
             <NativeBannerAd />
@@ -256,7 +255,7 @@ function AdminPanel() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const response = await fetch('https://jobfinder-production-b62d.up.railway.app/api/jobs', {
+      const response = await fetch(`${API_URL}/api/jobs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
