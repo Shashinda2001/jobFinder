@@ -164,7 +164,7 @@ function JobList() {
 
 // ── JobDetails ───────────────────────────────────────────────────────
 
-function JobDetails() {
+ function JobDetails() {
   const { id } = useParams();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -179,12 +179,14 @@ function JobDetails() {
   if (loading) return <p style={{ textAlign: 'center', padding: '100px' }}>Loading job details...</p>;
   if (!job) return <p style={{ textAlign: 'center', padding: '100px' }}>Job listing not found.</p>;
 
+  // Split description into paragraphs and insert ads every 2
+  const paragraphs = job.description.split('\n').filter(p => p.trim() !== '');
+
   return (
     <div style={{ fontFamily: 'Segoe UI, sans-serif', backgroundColor: '#f8fafc', minHeight: '100vh' }}>
       <Navbar isAdmin={false} />
       <div style={{ maxWidth: '750px', margin: '0 auto', padding: '30px 20px' }}>
 
-        {/* TOP BANNER AD */}
         <TopBannerAd />
 
         <div style={{ backgroundColor: '#fff', padding: '40px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}>
@@ -198,9 +200,20 @@ function JobDetails() {
           {/* 300x250 RECTANGLE AD */}
           <RectangleAd />
 
-          <div style={{ margin: '40px 0', lineHeight: '1.8', color: '#334155', fontSize: '17px', whiteSpace: 'pre-wrap' }}>
+          {/* DESCRIPTION WITH ADS EVERY 2 PARAGRAPHS */}
+          <div style={{ margin: '40px 0' }}>
             <h3 style={{ color: '#0f172a', fontSize: '22px', marginBottom: '15px' }}>Role Description</h3>
-            {job.description}
+            {paragraphs.map((para, index) => (
+              <React.Fragment key={index}>
+                <p style={{ lineHeight: '1.8', color: '#334155', fontSize: '17px', marginBottom: '16px' }}>
+                  {para}
+                </p>
+                {/* Insert ad after every 2 paragraphs, not after the last one */}
+                {(index + 1) % 2 === 0 && index !== paragraphs.length - 1 && (
+                  <NativeBannerAd />
+                )}
+              </React.Fragment>
+            ))}
           </div>
 
           {/* PRE-APPLY NATIVE AD */}
@@ -225,7 +238,6 @@ function JobDetails() {
     </div>
   );
 }
-
 // ── AdminPanel ───────────────────────────────────────────────────────
 
 function AdminPanel() {
