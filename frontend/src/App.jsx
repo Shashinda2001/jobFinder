@@ -106,7 +106,7 @@ function JobList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/jobs')
+    fetch('https://jobfinder-production-b62d.up.railway.app/api/jobs')
       .then(r => r.json())
       .then(data => { setJobs(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -171,7 +171,7 @@ function JobDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/jobs/${id}`)
+    fetch(`https://jobfinder-production-b62d.up.railway.app/api/jobs/${id}`)
       .then(r => r.json())
       .then(data => { setJob(data); setLoading(false); })
       .catch(() => setLoading(false));
@@ -256,7 +256,7 @@ function AdminPanel() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const response = await fetch('http://localhost:5000/api/jobs', {
+      const response = await fetch('https://jobfinder-production-b62d.up.railway.app/api/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
